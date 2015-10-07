@@ -43,7 +43,6 @@ def expand_blast(tree, taxonID):
 	# open the blast file and create a new file
 	blast_list = [line.strip().split('\t') for line in open(sys.argv[3])]
 	output_blast = open(sys.argv[4], 'w')
-	output_blast = open(os.path.splitext(sys.argv[3])[0] + '_taxonomy.tsv', 'w')
 
 	# parse throuth the input blast hits
 	for line in blast_list:
@@ -60,8 +59,8 @@ def expand_blast(tree, taxonID):
 def get_taxonomy(tree, taxonID, ID):
 
 	# create an empty dic that will be filled up with the relevant ranks
-	taxon_dic = {'kingdom':'N/A', 'phylum':'N/A', 'class':'N/A', 'order':'N/A',
-			'family':'N/A', 'genus':'N/A', 'species':ID}
+	taxon_dic = {'kingdom':'unknown kingdom', 'phylum':'unknown phylum', 'class':'unknown class',
+			'order':'unknown order', 'family':'unknown family', 'genus':'unknown genus', 'species':ID}
 
 	# empty variables for the full taxonomy and the temporary taxonIDs
 	temp, taxonomy, cur_ID = [ID], [], ID
@@ -69,9 +68,6 @@ def get_taxonomy(tree, taxonID, ID):
 	# Keep adding higher taxonIDs to the temp list till the rood node (1) is reached
 	while temp[-1] != '1':
 
-		print temp
-		print taxon_dic
-		
 		# if first rank is added after the initial species rank
 		if len(temp) != 1:
 			# check if the previous rank is in the taxon dictionary
@@ -93,10 +89,10 @@ def get_taxonomy(tree, taxonID, ID):
 
 	# convert the taxonIDs in the taxon_dic to names for the taxonomy list
 	for rank in ['kingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species']:
-		if taxon_dic[rank] != 'N/A':
+		if 'unknown' not in taxon_dic[rank]:
 			taxonomy.append(taxonID[taxon_dic[rank]])
 		else:
-			taxonomy.append('N/A')
+			taxonomy.append(taxon_dic[rank])
 
 	# return the taxonomy
 	return ' / '.join(taxonomy)
