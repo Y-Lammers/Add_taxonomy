@@ -76,7 +76,7 @@ def get_taxonomy(tree, taxonID, ID):
 				taxon_dic[rank] = cur_ID
 
 			# check if the kingdom rank is filled in, if not use superkingdom
-			if rank == 'superkingdom' and taxon_dic['kingdom'] == 'N/A':
+			if rank == 'superkingdom' and taxon_dic['kingdom'] == 'unknown kingdom':
 				taxon_dic['kingdom'] = cur_ID
 
 			cur_ID = next_ID
