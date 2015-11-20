@@ -60,13 +60,13 @@ def get_taxonomy(tree, taxonID, ID):
 
 	# create an empty dic that will be filled up with the relevant ranks
 	taxon_dic = {'kingdom':'unknown kingdom', 'phylum':'unknown phylum', 'class':'unknown class',
-			'order':'unknown order', 'family':'unknown family', 'genus':'unknown genus', 'species':ID}
+			'order':'unknown order', 'family':'unknown family', 'genus':'unknown genus', 'species':'unknown species'}
 
 	# empty variables for the full taxonomy and the temporary taxonIDs
 	temp, taxonomy, cur_ID = [ID], [], ID
 	
 	# Keep adding higher taxonIDs to the temp list till the rood node (1) is reached
-	while temp[-1] != '1':
+	while temp[-1] != '1' and temp[-1] != 'N/A':
 
 		# if first rank is added after the initial species rank
 		if len(temp) != 1:
